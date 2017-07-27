@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Http } from "@angular/http";  
+import 'rxjs/Rx';
 
 @Component({
   selector: 'page-home',
@@ -15,13 +17,24 @@ export class HomePage {
   oUser: Observable<firebase.User>;
   user: string;
 
-  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private http: Http) {
     this.oUser = afAuth.authState;
     afAuth.authState.subscribe((oUser: firebase.User) => {
       this.user = oUser.displayName;
     });
 
-    this.items = [{ name: "test"}, {name : "test2"}];
+   this.http.get("https://us-central1-addrink-45eb9.cloudfunctions.net/getCaps")
+            .map(result => result.json())
+            .flatMap(result => result.types)
+            .map(result => (<any> result).type.name)
+            .toArray()
+            .subscribe(result => {
+                this.items = result;
+                console.log(result);
+            }, error => {
+                console.error(error);
+            });
+    //[{ name: "test"}, {name : "test2"}];
   }
 
 }
