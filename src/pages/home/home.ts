@@ -24,17 +24,13 @@ export class HomePage {
     });
 
    this.http.get("https://us-central1-addrink-45eb9.cloudfunctions.net/getCaps")
-            .map(result => result.json())
-            .flatMap(result => result.types)
-            .map(result => (<any> result).type.name)
-            .toArray()
-            .subscribe(result => {
-                this.items = result;
-                console.log(result);
-            }, error => {
-                console.error(error);
-            });
-    //[{ name: "test"}, {name : "test2"}];
+      .map(result => result.json())
+      .subscribe(result => {
+         this.items = result;
+           console.log(result);
+         }, error => {
+           console.error(error);
+      });
   }
 
 }
