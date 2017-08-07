@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -17,7 +17,7 @@ export class HomePage {
   oUser: Observable<firebase.User>;
   user: string;
 
-  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private http: Http) {
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, private http: Http, private alertCtrl: AlertController) {
     this.oUser = afAuth.authState;
     afAuth.authState.subscribe((oUser: firebase.User) => {
       this.user = oUser.displayName;
@@ -31,6 +31,51 @@ export class HomePage {
          }, error => {
            console.error(error);
       });
+  }
+
+  deleteEntry(event) {
+    let id = event.target.parentElement.getAttribute("id");
+    console.log(id);
+
+    //TODO generate function to delete Caps
+  }
+
+  addEntry(event) {
+    let alert = this.alertCtrl.create({
+      title: 'create Entity',
+      message: 'create a new Entry',
+      inputs: [
+        {
+          name: 'Name',
+          placeholder: 'Name'
+        },
+        {
+          name: 'Stock',
+          placeholder: 'Stock'
+        }
+      ],
+      buttons: [
+        {
+          text: 'cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'login',
+          handler: data => {
+            if (true) {
+              // logged in!
+            } else {
+              // invalid login
+              //return false;
+            }
+          }          
+        }
+      ]
+    });
+    //TODO integrate addCaps
   }
 
 }

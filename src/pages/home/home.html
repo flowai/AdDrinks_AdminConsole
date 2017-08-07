@@ -6,6 +6,10 @@
         {{user}}
         <ion-icon name="contact"></ion-icon>
       </button>
+      <button ion-button id="newEntry" (click)="addEntry($event)" outline>
+        Add Entry
+        <ion-icon name="plus"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -17,8 +21,8 @@
       <img src="">
     </ion-thumbnail>
     <h2>{{item.name}}</h2>
-    <p>Test</p>
-    <button ion-button clear item-end>Delete</button>
+    <p>{{item.stock}}</p>
+    <button ion-button clear item-end id={{item.name}} (click)="deleteEntry($event)">Delete</button>
   </ion-item>
 </ion-list>
 </ion-content>
