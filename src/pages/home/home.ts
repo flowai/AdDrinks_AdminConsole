@@ -23,7 +23,7 @@ export class HomePage {
       this.user = oUser.displayName;
     });
 
-   this.http.get("https://us-central1-addrink-45eb9.cloudfunctions.net/getCaps")
+   this.http.get("https://us-central1-addrink-45eb9.cloudfunctions.net/getCapsFull")
       .map(result => result.json())
       .subscribe(result => {
          this.items = result;
@@ -80,7 +80,6 @@ export class HomePage {
       ]
     });
     alert.present();
-    //TODO integrate addCaps
   }
 
   private handleError(error: any): Promise<any> {
