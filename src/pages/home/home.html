@@ -16,13 +16,13 @@
 
 <ion-content padding>
 <ion-list>
-  <ion-item *ngFor="let item of items">
+  <ion-item *ngFor="let key of keys">
     <ion-thumbnail item-start>
       <img src="">
     </ion-thumbnail>
-    <h2>{{item.name}}</h2>
-    <p>{{item.stock}}</p>
-    <button ion-button clear item-end id={{item.name}} (click)="deleteEntry($event)">Delete</button>
+    <h2>{{items[key].name}}</h2>
+    <p>{{items[key].stock}}</p>
+    <button ion-button clear item-end id={{key}} (click)="deleteEntry($event)">Delete</button>
   </ion-item>
 </ion-list>
 </ion-content>

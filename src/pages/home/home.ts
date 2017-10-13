@@ -13,6 +13,7 @@ import 'rxjs/Rx';
 export class HomePage {
 
   items: any;
+  keys: String[];
 
   oUser: Observable<firebase.User>;
   user: string;
@@ -27,6 +28,7 @@ export class HomePage {
       .map(result => result.json())
       .subscribe(result => {
          this.items = result;
+         this.keys = Object.keys(this.items);
            console.log(result);
          }, error => {
            console.error(error);
@@ -36,6 +38,13 @@ export class HomePage {
   deleteEntry(event) {
     let id = event.target.parentElement.getAttribute("id");
     console.log(id);
+
+    let headers = new Headers({'Content-Type': 'application/json'});
+
+    this.http.post("https://us-central1-addrink-45eb9.cloudfunctions.net/deleteCaps", { "id" : id}, {headers : headers})
+    .toPromise()
+    .catch(this.handleError);
+
 
     //TODO generate function to delete Caps
   }
