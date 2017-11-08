@@ -44,9 +44,6 @@ export class HomePage {
     this.http.post("https://us-central1-addrink-45eb9.cloudfunctions.net/deleteCaps", { "id" : id}, {headers : headers})
     .toPromise()
     .catch(this.handleError);
-
-
-    //TODO generate function to delete Caps
   }
 
   addEntry(event) {
@@ -95,5 +92,26 @@ export class HomePage {
     console.error('An error occurred', error); // for demo purposes only
   return Promise.reject(error.message || error);
 }
+
+  doRefresh(event){
+     console.log('Begin async operation', event);
+
+    setTimeout(() => {
+      this.getAllData();
+      event.complete();
+    }, 1000);
+  }
+
+  private getAllData() {
+    this.http.get("https://us-central1-addrink-45eb9.cloudfunctions.net/getCapsFull")
+      .map(result => result.json())
+      .subscribe(result => {
+         this.items = result;
+         this.keys = Object.keys(this.items);
+           console.log(result);
+         }, error => {
+           console.error(error);
+      });   
+  }
 
 }
